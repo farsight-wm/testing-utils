@@ -1,0 +1,28 @@
+var template = {
+	"key" : "value",
+	"att" : "value",
+	"deep" : {
+		"other" : "structure"
+	}
+};
+
+var createFromTemplate = function(template, params) {
+	var result = transform(template);
+	if(params != null) {
+		var params = transform(params);
+		var ctx = wrap(result);
+		ctx.merge(params); //deep merge!!!
+	}
+	return result
+}
+
+foo = createFromTemplate(template, {"att" : "otherValue", "deep" : { "me" : "me" } });
+
+//array = createDocumentArray(3);
+for(var i: range(0,2)) {
+	//array[i] = createFromTemplate(template, {"att" : i });
+	//array[i].att = string(i);
+}
+
+
+

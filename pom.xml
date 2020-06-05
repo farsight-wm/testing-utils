@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>testing-utils</artifactId>
+	<name>farsight-wm-testing-utils</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>farsight-wm</groupId>
+		<artifactId>parent</artifactId>
+		<version>10.5.0</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+
+	<licenses>
+		<license>
+			<name>The MIT License (MIT)</name>
+			<url>https://opensource.org/licenses/MIT</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+
+	<description>Modified Version from the upstream project https://github.com/wmaop/wm-parent/
+		Changes:
+			- modified to match our requirements</description>
+
+	<properties>
+		<jexl.version>3.1</jexl.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>farsight-wm</groupId>
+			<artifactId>utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.softwareag.webmethods</groupId>
+			<artifactId>wm-isclient</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-jexl3</artifactId>
+			<version>${jexl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>localServer</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>2.6</version>
+						<configuration>
+							<outputDirectory>${local.installPath}</outputDirectory>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>testProject</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.2.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>3.1.0</version>
+						<executions>
+							<execution>
+								<id>copy-resources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${local.testProjectPath}</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${project.build.directory}</directory>
+											<include>${project.name}*.jar</include>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>
