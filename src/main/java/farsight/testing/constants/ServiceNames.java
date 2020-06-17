@@ -1,6 +1,6 @@
 package farsight.testing.constants;
 
-import farsight.utils.PropertyLoader;
+import farsight.utils.properties.PropertyLoader;
 
 public final class ServiceNames {
 
